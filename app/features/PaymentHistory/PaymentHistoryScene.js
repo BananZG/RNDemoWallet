@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { darkBlue, grey, lightGrey } from '../../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
+import { getTransactions } from '../../reducers/WalletReducer/WalletSelectors';
 
 const PaymentHistoryScene = ({ transactions }) => {
   const styles = StyleSheet.create({
@@ -73,7 +74,7 @@ const PaymentHistoryScene = ({ transactions }) => {
 
 export default connect(
   state => ({
-    ...state.wallet,
+    transactions: getTransactions(state),
   }),
   {
     /* func */

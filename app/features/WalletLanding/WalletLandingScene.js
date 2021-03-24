@@ -19,8 +19,9 @@ import { black, grey, lightGrey } from '../../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ReferralModal from '../Referral/ReferralScene';
 import { connect } from 'react-redux';
+import { getLastTransaction } from '../../reducers/WalletReducer/WalletSelectors';
 
-const WalletLandingScene = ({ navigation, transactions }) => {
+const WalletLandingScene = ({ navigation, lastTransaction }) => {
   const [openReferral, setOpenReferral] = useState(false);
   const styles = StyleSheet.create({
     container: {
@@ -80,8 +81,6 @@ const WalletLandingScene = ({ navigation, transactions }) => {
       color: black,
     },
   });
-  const firstTransaction =
-    transactions && transactions.length > 0 ? transactions[0] : null;
   return (
     <View style={styles.container}>
       <Image source={PeacefulBG} style={styles.bgImage} />
@@ -100,17 +99,17 @@ const WalletLandingScene = ({ navigation, transactions }) => {
               marginHorizontal: 180,
             }}
           />
-          {firstTransaction && (
+          {lastTransaction && (
             <Card
               style={styles.longCard}
               onPress={() => navigation.navigate('PaymentHistory')}>
               <Icon name="history" size={30} />
               <View style={{ marginLeft: 30 }}>
                 <Text style={{ fontSize: 16, fontWeight: '600' }}>
-                  {firstTransaction.label}
+                  {lastTransaction.label}
                 </Text>
                 <Text style={{ fontSize: 12, fontWeight: '400' }}>
-                  {firstTransaction.amount} - {firstTransaction.date}
+                  {lastTransaction.amount} - {lastTransaction.date}
                 </Text>
               </View>
             </Card>
@@ -170,7 +169,7 @@ const WalletLandingScene = ({ navigation, transactions }) => {
 
 export default connect(
   state => ({
-    ...state.wallet,
+    lastTransaction: getLastTransaction(state),
   }),
   {
     /* func */

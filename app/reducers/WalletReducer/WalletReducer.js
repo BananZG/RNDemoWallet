@@ -15,7 +15,7 @@ const INITIAL_STATE = {
     },
     {
       label: 'Top-up from Paynow',
-      amount: '+ S$ 57.59',
+      amount: '+ S$ 69.59',
       date: '19 February 17:20',
     },
   ],
@@ -24,7 +24,6 @@ const INITIAL_STATE = {
 const WalletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case TOP_UP_ACTION:
-      console.log(action);
       return {
         ...state,
         balance: state.balance + action.payload,

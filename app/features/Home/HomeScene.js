@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import DummyLanding from '../../assets/images/DummyLanding.png';
 
 import WalletCard from '../../components/WalletCard/WalletCard';
+import { getBalance } from '../../reducers/WalletReducer/WalletSelectors';
 
 const HomeScene = ({ navigation, balance }) => {
   const styles = StyleSheet.create({
@@ -38,7 +39,7 @@ const HomeScene = ({ navigation, balance }) => {
 
 export default connect(
   state => ({
-    ...state.wallet,
+    balance: getBalance(state),
   }),
   {
     /* func */

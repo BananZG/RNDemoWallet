@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { white } from '../../assets/colors';
 import { topUp } from '../../reducers/WalletReducer/WalletActions';
 import Knob from '../../assets/images/games/knob.png';
+import { getBalance } from '../../reducers/WalletReducer/WalletSelectors';
 
 const participants = [15, 0, 5, 0, 0, 5, 0, 20, 0, 5];
 
@@ -136,7 +137,7 @@ const Wheels = ({ balance, topUp }) => {
 
 export default connect(
   state => ({
-    ...state.wallet,
+    balance: getBalance(state),
   }),
   {
     topUp,
