@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import WheelOfFortune from 'react-native-wheel-of-fortune';
+import { connect } from 'react-redux';
+import { white } from '../../assets/colors';
+import { addPoints } from '../../reducers/WalletReducer/WalletActions';
 import Knob from '../../assets/images/games/knob.png';
 
 const participants = [0, 5, 0, 0, 5, 0, 0, 10, 20];
 
-const Wheels = () => {
+const Wheels = ({ points, addPoints }) => {
   const [child, setChild] = useState(null);
   const [value, setValue] = useState(null);
   const [started, setStarted] = useState(false);
@@ -65,13 +68,36 @@ const Wheels = () => {
       fontWeight: 'bold',
       color: '#fff',
     },
+    pointsRow: {
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      marginTop: 30,
+    },
+    pointsText: {
+      alignSelf: 'flex-end',
+      fontSize: 14,
+      fontWeight: '500',
+      color: white,
+    },
+    pointsBoldText: {
+      alignSelf: 'flex-start',
+      fontSize: 20,
+      fontWeight: '700',
+      color: white,
+    },
   });
   return (
     <View style={styles.container}>
+      <View style={styles.pointsRow}>
+        <Text style={styles.pointsText}>Your current points: </Text>
+        <Text style={styles.pointsBoldText}>{points}</Text>
+        <Text style={styles.pointsText}> pts</Text>
+      </View>
       <WheelOfFortune
         options={wheelOptions}
         getWinner={v => {
           setValue(v);
+          addPoints(v);
         }}
       />
       {!started && (
@@ -98,4 +124,11 @@ const Wheels = () => {
   );
 };
 
-export default Wheels;
+export default connect(
+  state => ({
+    ...state.wallet,
+  }),
+  {
+    addPoints,
+  },
+)(Wheels);

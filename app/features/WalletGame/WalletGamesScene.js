@@ -14,6 +14,7 @@ import CarBG from '../../assets/images/games/car.jpeg';
 import HospitalBG from '../../assets/images/games/hospital.jpg';
 import { black } from '../../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
 
 const UIConfigs = [
   {
@@ -49,7 +50,7 @@ const UIConfigs = [
   },
 ];
 
-const WalletGamesScene = ({ navigation }) => {
+const WalletGamesScene = ({ navigation, points }) => {
   const styles = StyleSheet.create({
     list: {
       paddingHorizontal: 20,
@@ -97,7 +98,7 @@ const WalletGamesScene = ({ navigation }) => {
   const headerComponent = (
     <View style={styles.pointsRow}>
       <Text style={styles.pointsText}>Your current points: </Text>
-      <Text style={styles.pointsBoldText}>500</Text>
+      <Text style={styles.pointsBoldText}>{points}</Text>
       <Text style={styles.pointsText}> pts</Text>
     </View>
   );
@@ -134,4 +135,11 @@ const WalletGamesScene = ({ navigation }) => {
   );
 };
 
-export default WalletGamesScene;
+export default connect(
+  state => ({
+    ...state.wallet,
+  }),
+  {
+    /* func */
+  },
+)(WalletGamesScene);

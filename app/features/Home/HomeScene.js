@@ -1,10 +1,11 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
 import DummyLanding from '../../assets/images/DummyLanding.png';
 
 import WalletCard from '../../components/WalletCard/WalletCard';
 
-const HomeScene = ({ navigation }) => {
+const HomeScene = ({ navigation, balance }) => {
   const styles = StyleSheet.create({
     backgroundStyle: {
       flex: 1,
@@ -26,6 +27,7 @@ const HomeScene = ({ navigation }) => {
         height="100%"
         style={styles.image}>
         <WalletCard
+          balance={balance}
           style={styles.wallet}
           onPress={() => navigation.navigate('WalletLanding')}
         />
@@ -34,4 +36,11 @@ const HomeScene = ({ navigation }) => {
   );
 };
 
-export default HomeScene;
+export default connect(
+  state => ({
+    ...state.wallet,
+  }),
+  {
+    /* func */
+  },
+)(HomeScene);

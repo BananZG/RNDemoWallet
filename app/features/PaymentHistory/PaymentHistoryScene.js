@@ -2,26 +2,9 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { darkBlue, grey, lightGrey } from '../../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
 
-const UIConfigs = [
-  {
-    label: 'Pulse Subscription',
-    amount: '- S$ 3.00',
-    date: '20 March 20:30',
-  },
-  {
-    label: 'Pulse Subscription',
-    amount: '- S$ 3.00',
-    date: '20 February 20:30',
-  },
-  {
-    label: 'Top-up from Paynow',
-    amount: '+ S$ 60.00',
-    date: '19 February 17:20',
-  },
-];
-
-const PaymentHistoryScene = () => {
+const PaymentHistoryScene = ({ transactions }) => {
   const styles = StyleSheet.create({
     list: {
       backgroundColor: lightGrey,
@@ -54,6 +37,10 @@ const PaymentHistoryScene = () => {
       fontWeight: '700',
       color: darkBlue,
     },
+    separator: {
+      height: 1,
+      backgroundColor: grey,
+    },
   });
 
   const renderItem = ({ item }) => (
@@ -70,12 +57,12 @@ const PaymentHistoryScene = () => {
   );
 
   const keyExtractor = (_, i) => i.toString();
-  const separator = <View style={{ height: 1, backgroundColor: grey }} />;
+  const separator = <View style={styles.separator} />;
 
   return (
     <FlatList
       style={styles.list}
-      data={UIConfigs}
+      data={transactions}
       ItemSeparatorComponent={() => separator}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
@@ -84,4 +71,11 @@ const PaymentHistoryScene = () => {
   );
 };
 
-export default PaymentHistoryScene;
+export default connect(
+  state => ({
+    ...state.wallet,
+  }),
+  {
+    /* func */
+  },
+)(PaymentHistoryScene);

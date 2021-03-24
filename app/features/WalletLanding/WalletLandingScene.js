@@ -18,8 +18,9 @@ import PortfolioBG from '../../assets/images/portfolio.png';
 import { black, grey, lightGrey, red } from '../../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ReferralModal from '../Referral/ReferralScene';
+import { connect } from 'react-redux';
 
-const WalletLandingScene = ({ navigation }) => {
+const WalletLandingScene = ({ navigation, transactions }) => {
   const [openReferral, setOpenReferral] = useState(false);
   const styles = StyleSheet.create({
     container: {
@@ -79,6 +80,8 @@ const WalletLandingScene = ({ navigation }) => {
       color: black,
     },
   });
+  const firstTransaction =
+    transactions && transactions.length > 0 ? transactions[0] : null;
   return (
     <View style={styles.container}>
       <Image source={PeacefulBG} style={styles.bgImage} />
@@ -97,19 +100,21 @@ const WalletLandingScene = ({ navigation }) => {
               marginHorizontal: 180,
             }}
           />
-          <Card
-            style={styles.longCard}
-            onPress={() => navigation.navigate('PaymentHistory')}>
-            <Icon name="history" size={30} />
-            <View style={{ marginLeft: 30 }}>
-              <Text style={{ fontSize: 16, fontWeight: '600' }}>
-                Paid Pulse Subscription
-              </Text>
-              <Text style={{ fontSize: 12, fontWeight: '400' }}>
-                Paid S$ 3.00 - 20 Mar 20:30
-              </Text>
-            </View>
-          </Card>
+          {firstTransaction && (
+            <Card
+              style={styles.longCard}
+              onPress={() => navigation.navigate('PaymentHistory')}>
+              <Icon name="history" size={30} />
+              <View style={{ marginLeft: 30 }}>
+                <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                  {firstTransaction.label}
+                </Text>
+                <Text style={{ fontSize: 12, fontWeight: '400' }}>
+                  {firstTransaction.amount} - {firstTransaction.date}
+                </Text>
+              </View>
+            </Card>
+          )}
           <Text>Rewards</Text>
           <View style={styles.rewardsSection}>
             <Card
@@ -163,4 +168,11 @@ const WalletLandingScene = ({ navigation }) => {
   );
 };
 
-export default WalletLandingScene;
+export default connect(
+  state => ({
+    ...state.wallet,
+  }),
+  {
+    /* func */
+  },
+)(WalletLandingScene);
