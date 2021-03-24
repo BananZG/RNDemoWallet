@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScene from './features/Home/HomeScene';
 import WalletLandingScene from './features/WalletLanding/WalletLandingScene';
 import PaymentHistoryScene from './features/PaymentHistory/PaymentHistoryScene';
+import Wheels from './features/WalletGame/Wheels';
 import { StatusBar, Text, useColorScheme } from 'react-native';
 import { red } from './assets/colors';
 import WalletGamesScene from './features/WalletGame/WalletGamesScene';
@@ -41,6 +42,14 @@ const HomeStack = () => {
           component={WalletGamesScene}
           options={{
             title: 'Wallet Games',
+            headerRight: HeaderRight,
+          }}
+        />
+        <Stack.Screen
+          name="SpinTheWheel"
+          component={Wheels}
+          options={{
+            title: 'Spin The Wheel',
             headerRight: HeaderRight,
           }}
         />

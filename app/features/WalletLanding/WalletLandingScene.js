@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -17,8 +17,10 @@ import ILPBG from '../../assets/images/ilp.png';
 import PortfolioBG from '../../assets/images/portfolio.png';
 import { black, grey, lightGrey, red } from '../../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ReferralModal from '../Referral/ReferralScene';
 
 const WalletLandingScene = ({ navigation }) => {
+  const [openReferral, setOpenReferral] = useState(false);
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -70,11 +72,21 @@ const WalletLandingScene = ({ navigation }) => {
       fontWeight: '500',
       color: black,
     },
+    cardTextSmall: {
+      alignSelf: 'center',
+      fontSize: 10,
+      fontWeight: 'normal',
+      color: black,
+    },
   });
   return (
     <View style={styles.container}>
       <Image source={PeacefulBG} style={styles.bgImage} />
       <ScrollView overScrollMode="never" style={styles.scrollView}>
+        <ReferralModal
+          modalVisible={openReferral}
+          onClose={() => setOpenReferral(false)}
+        />
         <Card style={styles.bgCard}>
           <View
             style={{
@@ -105,86 +117,44 @@ const WalletLandingScene = ({ navigation }) => {
               onPress={() => navigation.navigate('WalletGames')}>
               <ImageBackground source={PlayBG} style={styles.cardBG} />
               <Text style={styles.cardText}>Game Center</Text>
-              <Text
-                style={[
-                  styles.cardText,
-                  { fontSize: 10, fontWeight: 'normal' },
-                ]}>
-                Earn as you play
-              </Text>
-            </Card>
-
-            <Card style={styles.smallCard}>
-              <ImageBackground source={ReferBG} style={styles.cardBG} />
-              <Text style={styles.cardText}>Refer friends</Text>
-              <Text
-                style={[
-                  styles.cardText,
-                  { fontSize: 10, fontWeight: 'normal' },
-                ]}>
-                Earns with your friends
-              </Text>
+              <Text style={styles.cardTextSmall}>Earn as you play</Text>
             </Card>
 
             <Card
               style={styles.smallCard}
-              onPress={() => navigation.navigate('WalletGames')}>
+              onPress={() => setOpenReferral(true)}>
+              <ImageBackground source={ReferBG} style={styles.cardBG} />
+              <Text style={styles.cardText}>Refer friends</Text>
+              <Text style={styles.cardTextSmall}>Earns with your friends</Text>
+            </Card>
+
+            <Card style={styles.smallCard}>
               <ImageBackground source={GameBG} style={styles.cardBG} />
               <Text style={styles.cardText}>Offers</Text>
-              <Text
-                style={[
-                  styles.cardText,
-                  { fontSize: 10, fontWeight: 'normal' },
-                ]}>
-                Updated weekly
-              </Text>
+              <Text style={styles.cardTextSmall}>Updated weekly</Text>
             </Card>
           </View>
 
           <Text>Payments</Text>
           <View style={styles.rewardsSection}>
-            <Card
-              style={styles.smallCard}
-              onPress={() => navigation.navigate('WalletGames')}>
+            <Card style={styles.smallCard}>
               <ImageBackground source={ClaimsBG} style={styles.cardBG} />
               <Text style={styles.cardText}>Submit Claims</Text>
-              <Text
-                style={[
-                  styles.cardText,
-                  { fontSize: 10, fontWeight: 'normal' },
-                ]}>
-                Pru Panel and Outpatient
-              </Text>
+              <Text style={styles.cardTextSmall}>Pru Panel and Outpatient</Text>
             </Card>
           </View>
 
           <Text>Investment</Text>
           <View style={styles.rewardsSection}>
-            <Card
-              style={styles.smallCard}
-              onPress={() => navigation.navigate('WalletGames')}>
+            <Card style={styles.smallCard}>
               <ImageBackground source={PortfolioBG} style={styles.cardBG} />
               <Text style={styles.cardText}>Portfolio</Text>
-              <Text
-                style={[
-                  styles.cardText,
-                  { fontSize: 10, fontWeight: 'normal' },
-                ]}>
-                FNA / Risk assessments
-              </Text>
+              <Text style={styles.cardTextSmall}>FNA / Risk assessments</Text>
             </Card>
-            <Card
-              style={styles.smallCard}
-              onPress={() => navigation.navigate('WalletGames')}>
+            <Card style={styles.smallCard}>
               <ImageBackground source={ILPBG} style={styles.cardBG} />
               <Text style={styles.cardText}>ILPs</Text>
-              <Text
-                style={[
-                  styles.cardText,
-                  { fontSize: 10, fontWeight: 'normal' },
-                ]}>
-                Investment-linked Plans
-              </Text>
+              <Text style={styles.cardTextSmall}>Investment-linked Plans</Text>
             </Card>
           </View>
         </Card>

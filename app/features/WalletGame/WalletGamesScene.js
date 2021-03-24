@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import Card from '../../components/Card/Card';
+import SpinBG from '../../assets/images/games/spin.png';
 import FarmBG from '../../assets/images/games/farm.jpeg';
 import FishBG from '../../assets/images/games/fish.jpeg';
 import CarBG from '../../assets/images/games/car.jpeg';
@@ -15,6 +16,13 @@ import { black } from '../../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const UIConfigs = [
+  {
+    bg: SpinBG,
+    label: 'Spin The Wheel',
+    energy: 3,
+    countdown: '7 mins',
+    onPress: nav => nav.navigate('SpinTheWheel'),
+  },
   {
     bg: FarmBG,
     label: 'Happy Farming',
@@ -41,7 +49,7 @@ const UIConfigs = [
   },
 ];
 
-const WalletGamesScene = () => {
+const WalletGamesScene = ({ navigation }) => {
   const styles = StyleSheet.create({
     list: {
       paddingHorizontal: 20,
@@ -59,6 +67,22 @@ const WalletGamesScene = () => {
       fontWeight: '500',
       color: black,
     },
+    pointsRow: {
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+    },
+    pointsText: {
+      alignSelf: 'flex-end',
+      fontSize: 14,
+      fontWeight: '500',
+      color: black,
+    },
+    pointsBoldText: {
+      alignSelf: 'flex-start',
+      fontSize: 20,
+      fontWeight: '700',
+      color: black,
+    },
     flexRow: {
       flexDirection: 'row',
       justifyContent: 'space-around',
@@ -70,8 +94,18 @@ const WalletGamesScene = () => {
     },
   });
 
+  const headerComponent = (
+    <View style={styles.pointsRow}>
+      <Text style={styles.pointsText}>Your current points: </Text>
+      <Text style={styles.pointsBoldText}>500</Text>
+      <Text style={styles.pointsText}> pts</Text>
+    </View>
+  );
+
   const renderItem = ({ item }) => (
-    <Card style={styles.card}>
+    <Card
+      style={styles.card}
+      onPress={item.onPress ? () => item.onPress(navigation) : null}>
       <ImageBackground source={item.bg} style={styles.cardBG} />
       <View style={styles.flexRow}>
         <Text style={styles.cardText}>{item.label}</Text>
@@ -92,6 +126,7 @@ const WalletGamesScene = () => {
   return (
     <FlatList
       style={styles.list}
+      ListHeaderComponent={headerComponent}
       data={UIConfigs}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
