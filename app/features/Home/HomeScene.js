@@ -5,7 +5,7 @@ import DummyLanding from '../../assets/images/DummyLanding.png';
 
 import WalletCard from '../../components/WalletCard/WalletCard';
 
-const HomeScene = ({ navigation, balance, points }) => {
+const HomeScene = ({ navigation, balance }) => {
   const styles = StyleSheet.create({
     backgroundStyle: {
       flex: 1,
@@ -28,7 +28,6 @@ const HomeScene = ({ navigation, balance, points }) => {
         style={styles.image}>
         <WalletCard
           balance={balance}
-          points={points}
           style={styles.wallet}
           onPress={() => navigation.navigate('WalletLanding')}
         />

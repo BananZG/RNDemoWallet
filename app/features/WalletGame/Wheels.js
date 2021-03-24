@@ -3,12 +3,12 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import WheelOfFortune from 'react-native-wheel-of-fortune';
 import { connect } from 'react-redux';
 import { white } from '../../assets/colors';
-import { addPoints } from '../../reducers/WalletReducer/WalletActions';
+import { topUp } from '../../reducers/WalletReducer/WalletActions';
 import Knob from '../../assets/images/games/knob.png';
 
-const participants = [0, 5, 0, 0, 5, 0, 20, 0, 10];
+const participants = [15, 0, 5, 0, 0, 5, 0, 20, 0, 5];
 
-const Wheels = ({ points, addPoints }) => {
+const Wheels = ({ balance, topUp }) => {
   const [child, setChild] = useState(null);
   const [value, setValue] = useState(null);
   const [started, setStarted] = useState(false);
@@ -91,15 +91,19 @@ const Wheels = ({ points, addPoints }) => {
   return (
     <View style={styles.container}>
       <View style={styles.pointsRow}>
-        <Text style={styles.pointsText}>Your current points: </Text>
-        <Text style={styles.pointsBoldText}>{points}</Text>
-        <Text style={styles.pointsText}> pts</Text>
+        <Text style={styles.pointsText}>Your current balance: S$</Text>
+        <Text style={styles.pointsBoldText}>{balance}</Text>
       </View>
       <WheelOfFortune
         options={wheelOptions}
         getWinner={v => {
-          setValue(v);
-          addPoints(v);
+          if (v > 0) {
+            const dollar = v / 100;
+            setValue(dollar);
+            topUp(dollar, 'Game - Spin The Wheel');
+          } else {
+            setValue(0);
+          }
         }}
       />
       {!started && (
@@ -111,7 +115,11 @@ const Wheels = ({ points, addPoints }) => {
       )}
       {value != null && (
         <View style={styles.winnerView}>
-          <Text style={styles.winnerText}>You win {value} points !</Text>
+          <Text style={styles.winnerText}>
+            {value > 0
+              ? `You win S$ ${value.toFixed(2)} !`
+              : 'Better luck next time.'}
+          </Text>
           <TouchableOpacity
             onPress={() => {
               setValue(null);
@@ -131,6 +139,6 @@ export default connect(
     ...state.wallet,
   }),
   {
-    addPoints,
+    topUp,
   },
 )(Wheels);
