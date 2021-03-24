@@ -44,7 +44,7 @@ const WalletReducer = (state = INITIAL_STATE, action) => {
     case ADD_TRANSACTIONS_ACTION:
       return {
         ...state,
-        transactions: [action.action, ...state.transactions],
+        transactions: [action.payload, ...state.transactions],
       };
 
     default:

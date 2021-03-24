@@ -6,7 +6,7 @@ import { white } from '../../assets/colors';
 import { addPoints } from '../../reducers/WalletReducer/WalletActions';
 import Knob from '../../assets/images/games/knob.png';
 
-const participants = [0, 5, 0, 0, 5, 0, 0, 10, 20];
+const participants = [0, 5, 0, 0, 5, 0, 20, 0, 10];
 
 const Wheels = ({ points, addPoints }) => {
   const [child, setChild] = useState(null);
@@ -39,6 +39,7 @@ const Wheels = ({ points, addPoints }) => {
       backgroundColor: '#E74C3C',
     },
     startButtonView: {
+      paddingTop: 70,
       position: 'absolute',
     },
     startButton: {
@@ -52,6 +53,7 @@ const Wheels = ({ points, addPoints }) => {
       fontWeight: 'bold',
     },
     winnerView: {
+      paddingTop: 70,
       position: 'absolute',
       justifyContent: 'center',
       alignItems: 'center',

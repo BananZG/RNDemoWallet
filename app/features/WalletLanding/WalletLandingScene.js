@@ -15,7 +15,7 @@ import ReferBG from '../../assets/images/refer.png';
 import ClaimsBG from '../../assets/images/claims.png';
 import ILPBG from '../../assets/images/ilp.png';
 import PortfolioBG from '../../assets/images/portfolio.png';
-import { black, grey, lightGrey, red } from '../../assets/colors';
+import { black, grey, lightGrey } from '../../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ReferralModal from '../Referral/ReferralScene';
 import { connect } from 'react-redux';

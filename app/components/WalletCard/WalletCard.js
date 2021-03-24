@@ -5,7 +5,7 @@ import Card from '../Card/Card';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import WoodBG from '../../assets/images/WoodBG.png';
 
-const WalletCard = ({ testID, balance, style, onPress, ...props }) => {
+const WalletCard = ({ testID, balance, points, style, onPress, ...props }) => {
   const styles = StyleSheet.create({
     cardStyle: {
       padding: 5,
@@ -36,6 +36,13 @@ const WalletCard = ({ testID, balance, style, onPress, ...props }) => {
       fontWeight: '700',
       color: arcticBlast,
     },
+    pointsText: {
+      paddingTop: 25,
+      fontSize: 16,
+      fontWeight: '400',
+      color: arcticBlast,
+      position: 'absolute',
+    },
     footerText: {
       marginLeft: 20,
       color: white,
@@ -60,6 +67,9 @@ const WalletCard = ({ testID, balance, style, onPress, ...props }) => {
         <View style={styles.flexRow}>
           <Text style={styles.currencyText}>S$</Text>
           <Text style={styles.amountText}>{balance}</Text>
+        </View>
+        <View style={styles.flexRow}>
+          <Text style={styles.pointsText}>Points: {points}</Text>
         </View>
       </ImageBackground>
       <View style={[styles.flexRow, styles.cardFooter]}>

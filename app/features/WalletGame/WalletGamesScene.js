@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FlatList,
   ImageBackground,
@@ -15,6 +15,7 @@ import HospitalBG from '../../assets/images/games/hospital.jpg';
 import { black } from '../../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
+import RedeemModal from './RedeemModal';
 
 const UIConfigs = [
   {
@@ -51,6 +52,7 @@ const UIConfigs = [
 ];
 
 const WalletGamesScene = ({ navigation, points }) => {
+  const [showRedemption, setShowRedemption] = useState(false);
   const styles = StyleSheet.create({
     list: {
       paddingHorizontal: 20,
@@ -79,10 +81,13 @@ const WalletGamesScene = ({ navigation, points }) => {
       color: black,
     },
     pointsBoldText: {
-      alignSelf: 'flex-start',
+      alignSelf: 'flex-end',
       fontSize: 20,
       fontWeight: '700',
       color: black,
+    },
+    redeemButton: {
+      marginLeft: 80,
     },
     flexRow: {
       flexDirection: 'row',
@@ -97,9 +102,16 @@ const WalletGamesScene = ({ navigation, points }) => {
 
   const headerComponent = (
     <View style={styles.pointsRow}>
+      <RedeemModal
+        modalVisible={showRedemption}
+        onClose={() => setShowRedemption(false)}
+      />
       <Text style={styles.pointsText}>Your current points: </Text>
       <Text style={styles.pointsBoldText}>{points}</Text>
       <Text style={styles.pointsText}> pts</Text>
+      <Card onPress={() => setShowRedemption(true)} style={styles.redeemButton}>
+        <Text>Redeem</Text>
+      </Card>
     </View>
   );
 
